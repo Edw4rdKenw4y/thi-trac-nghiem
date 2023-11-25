@@ -9,7 +9,7 @@ public class AdminMenu {
     public void admin(){
         Scanner sc = new Scanner(System.in);
         AccountRepository accountRepository = new AccountRepository("acclist.txt");
-
+        
         while (true) {
             System.out.println("[1]. Hien thi danh sach nguoi dung");
             System.out.println("[2]. Them nguoi dung");

@@ -31,11 +31,15 @@ public class login {
 					System.out.println("Login successful!");
 					if (loggedInAccount.getRole().equalsIgnoreCase("admin")) { 
 						System.out.println("Đăng nhập thành công với tài khoản admin!");
+                        AdminMenu ad = new AdminMenu();
+                        ad.admin();
 					}
+                    else if(loggedInAccount.getRole().equalsIgnoreCase("professor")){
+						System.out.println("Đăng nhập thành công với tài khoản professor!");
+                        ProfessorMenu pro = new ProfessorMenu();
+                        pro.professor();
+				    }
 				}
-				// if else(){
-
-				// }
 
 				else {
 					System.out.println("Login failed. Invalid username or password.");
