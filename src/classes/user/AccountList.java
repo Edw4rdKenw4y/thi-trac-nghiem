@@ -12,7 +12,7 @@ public class AccountList {
 	public AccountList(ArrayList<Account> acclist) {
 		this.arr = acclist;
 	}
-	public ArrayList<Account> getAccList() {
+	public ArrayList<Account> getArr() {
 		return arr;
 	}
 	public void setAccList(ArrayList<Account> acclist) {

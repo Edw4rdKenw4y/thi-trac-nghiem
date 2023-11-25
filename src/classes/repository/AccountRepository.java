@@ -63,7 +63,7 @@ public class AccountRepository {
 	private void writefile() {
 		try {
 			FileWriter writer = new FileWriter(this.filepath);
-			for (Account acc : this.acclist.getAccList()) {
+			for (Account acc : this.acclist.getArr()) {
 				writer.write(
 					acc.getUsername()             +" "+
 					acc.getPassword()             +" "+

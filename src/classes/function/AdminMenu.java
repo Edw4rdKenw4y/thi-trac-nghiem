@@ -8,24 +8,24 @@ import java.util.Scanner;
 public class AdminMenu {
     public void admin(){
         Scanner sc = new Scanner(System.in);
-        AccountRepository accountRepository = new AccountRepository("userlist.txt");
+        AccountRepository accountRepository = new AccountRepository("acclist.txt");
 
         while (true) {
-            System.out.println("[1]. Hiển thị danh sách người dùng");
-            System.out.println("[2]. Thêm người dùng");
-            System.out.println("[3]. Sửa thông tin người dùng");
-            System.out.println("[4]. Xóa người dùng");
-            System.out.println("[5]. Đăng xuất");
+            System.out.println("[1]. Hien thi danh sach nguoi dung");
+            System.out.println("[2]. Them nguoi dung");
+            System.out.println("[3]. Sua thong tin nguoi dung");
+            System.out.println("[4]. Xoa nguoi dung");
+            System.out.println("[5]. Dang xuat");
 
-            System.out.println("Nhập lựa chọn: ");
+            System.out.println("Nhap lua chon: ");
             int adminChoice = sc.nextInt();
             sc.nextLine(); // consume the newline character
 
             switch (adminChoice) {
                 case 1:
                     // Hiển thị danh sách người dùng
-                    System.out.println("Danh sách người dùng:");
-                    for (Account acc : accountRepository.getAcclist().getAccList()) {
+                    System.out.println("Danh sach nguoi dung:");
+                    for (Account acc : accountRepository.getAcclist().getArr()) {
                         System.out.println(acc);
                     }
                     break;
@@ -48,16 +48,28 @@ public class AdminMenu {
                     System.out.println("Nhập số điện thoại: ");
                     String phoneNumber = sc.nextLine();
 
-                    UserInfo info = new UserInfo(fullName, yearOfBirth, gender, phoneNumber);
-                    
-                    Account newAccount = new Account() {};
-                    newAccount.setUsername(username);
-                    newAccount.setPassword(password);
-                    newAccount.setRole(role);
-                    newAccount.setInfo(info);
+                    Account acc = null;
+				UserInfo info = new UserInfo(fullName, yearOfBirth, gender, phoneNumber);
+				if (role.equalsIgnoreCase("professor")) {
+					acc = new Professor() {}; 
+				} else if (role.equalsIgnoreCase("student")) {
+					acc = new Student() {}; 
+				} if (role.equalsIgnoreCase("admin")) {
+					acc = new Admin() {}; 
+				}
 
-                    accountRepository.addUser(newAccount);
-                    System.out.println("Người dùng đã được thêm.");
+				acc.setUsername(username); 
+				acc.setPassword(password); 
+				acc.setRole(role); 
+				acc.setInfo(info);
+
+				System.out.println(acc);
+
+				if (accountRepository.addUser(acc)) {
+					System.out.println("Registration successful!");
+				} else {
+					System.out.println("Registration failed. Username already exists.");
+				}
                     break;
 
                 case 3:
