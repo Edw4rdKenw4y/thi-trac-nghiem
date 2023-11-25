@@ -47,15 +47,16 @@ public class ProfessorMenu {
                     System.out.println("Nhập độ khó (1 - Dễ, 2 - Trung bình, 3 - Khó): ");
                     int difficulty = sc.nextInt();
                     sc.nextLine(); // consume the newline character
-                    System.out.println("Nhập câu trả lời đúng (1 - 4): ");
-                    int correctAnswer = sc.nextInt();
-                    sc.nextLine(); // consume the newline character
             
                     String[] answer = new String[4];
                     for (int i = 0; i < answer.length; i++) {
                         System.out.println("Nhập câu trả lời " + (i + 1) + ": ");
                         answer[i] = sc.nextLine();
                     }
+                    
+                    System.out.println("Nhập câu trả lời đúng (1 - 4): ");
+                    int correctAnswer = sc.nextInt();
+                    sc.nextLine(); // consume the newline character
 
                     Question newQuestion = new Question(chapter, difficulty, content, answer, correctAnswer);
                     questionRepository.addQuestion(newQuestion);

@@ -1,0 +1,18 @@
+0 1 2
+ABCXYZ
+co
+no
+cc
+abc
+0 1 4
+abc
+0
+1
+2
+bac
+0 1 4
+abc
+a
+b
+c
+d
