@@ -29,25 +29,44 @@ public class login {
 
                     if (loggedInAccount != null && loggedInAccount.getPassword().equals(loginPassword)) {
                         System.out.println("Login successful!");
-                    } else {
+                        if (loggedInAccount.getRole().equalsIgnoreCase("admin")) { 
+                            System.out.println("Đăng nhập thành công với tài khoản admin!");
+                            AdminMenu ad = new AdminMenu();
+                            ad.admin();
+                        }
+                    }
+                    // if else(){
+                        
+                    // }
+
+                    else {
                         System.out.println("Login failed. Invalid username or password.");
                     }
                     break;
 
                 case 2:
                     System.out.println("Nhap user name: ");
+                    System.out.println("Professor: <faculty><subjectId><count> Example: IT001001");
+                    System.out.println("Student: <faculty><year><class><count> Example: IT202240001");
                     String username = sc.nextLine();
+
                     System.out.println("Nhap password: ");
                     String password = sc.nextLine();
+
                     System.out.println("Nhap role: ");
                     String role = sc.nextLine();
-                    System.out.println("Nhap full name: ");
+
+                    System.out.println("Nhap full name: (vd:Nguyen_Van_A)");
                     String fullName = sc.nextLine();
+
                     System.out.println("Nhap nam sinh: ");
                     int yearOfBirth = sc.nextInt();
+
                     sc.nextLine(); 
+
                     System.out.println("Nhap gioi tinh: ");
                     String gender = sc.nextLine();
+
                     System.out.println("Nhap sdt: ");
                     String phoneNumber = sc.nextLine();
 
