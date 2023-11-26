@@ -7,10 +7,14 @@ public class Date {
 	private String year;
 	
 	public Date(String day, String month, String year) {
-		super();
 		this.day = day;
 		this.month = month;
 		this.year = year;
+	}
+	public Date() {
+		this.day = null;
+		this.month = null;
+		this.year = null;
 	}
 
 	public String getDay() {
@@ -39,7 +43,7 @@ public class Date {
 
 	@Override
 	public String toString() {
-        return day + "/" + month + "/" + year;
+        return day + "-" + month + "-" + year;
 	}
 
 }

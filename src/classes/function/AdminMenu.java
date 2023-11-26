@@ -119,7 +119,8 @@ public class AdminMenu {
                 case 5:
                     // Đăng xuất
                     System.out.println("Đăng xuất thành công.");
-                    System.exit(0);
+                    login lg = new login();
+                    lg.main(null);
                     break;
 
                 default:
