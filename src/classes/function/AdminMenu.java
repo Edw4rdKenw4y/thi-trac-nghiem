@@ -119,12 +119,12 @@ public class AdminMenu {
                 case 5:
                     // Đăng xuất
                     System.out.println("Đăng xuất thành công.");
-                    login lg = new login();
-                    lg.main(null);
+                    login.main(null);
                     break;
 
                 default:
                     System.out.println("Lựa chọn không hợp lệ.");
+                    sc.close();
                     break;
             }
         }
