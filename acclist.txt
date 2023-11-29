@@ -1,2 +1,0 @@
-admin 123456 admin admin 2000 nam 01235124123
-IT001001 123456 professor professor 2000 nam 012356542

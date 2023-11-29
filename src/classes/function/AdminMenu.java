@@ -3,12 +3,15 @@ package classes.function;
 import classes.repository.*;
 import classes.user.*;
 
+import classes.util.Constant;
+
+
 import java.util.Scanner;
 
 public class AdminMenu {
-    public void admin(){
+    public void admin(String filename){
         Scanner sc = new Scanner(System.in);
-        AccountRepository accountRepository = new AccountRepository("acclist.txt");
+        AccountRepository accountRepository = new AccountRepository(filename);
         
         while (true) {
             System.out.println("[1]. Hien thi danh sach nguoi dung");
@@ -49,28 +52,28 @@ public class AdminMenu {
                     String phoneNumber = sc.nextLine();
 
                     Account acc = null;
-				UserInfo info = new UserInfo(fullName, yearOfBirth, gender, phoneNumber);
-				if (role.equalsIgnoreCase("professor")) {
-					acc = new Professor() {}; 
-				} else if (role.equalsIgnoreCase("student")) {
-					acc = new Student() {}; 
-				} if (role.equalsIgnoreCase("admin")) {
-					acc = new Admin() {}; 
-				}
+                    UserInfo info = new UserInfo(fullName, yearOfBirth, gender, phoneNumber);
+                    if (role.equalsIgnoreCase("professor")) {
+                        acc = new Professor() {}; 
+                    } else if (role.equalsIgnoreCase("student")) {
+                        acc = new Student() {}; 
+                    } if (role.equalsIgnoreCase("admin")) {
+                        acc = new Admin() {}; 
+                    }
 
-				acc.setUsername(username); 
-				acc.setPassword(password); 
-				acc.setRole(role); 
-				acc.setInfo(info);
+                    acc.setUsername(username); 
+                    acc.setPassword(password); 
+                    acc.setRole(role); 
+                    acc.setInfo(info);
 
-				System.out.println(acc);
+                    // System.out.println(acc);
 
-				if (accountRepository.addUser(acc)) {
-					System.out.println("Registration successful!");
-				} else {
-					System.out.println("Registration failed. Username already exists.");
-				}
-                    break;
+                    if (accountRepository.addUser(acc)) {
+                        System.out.println("Registration successful!");
+                    } else {
+                        System.out.println("Registration failed. Username already exists.");
+                    }
+                        break;
 
                 case 3:
                     // Sửa thông tin người dùng
@@ -119,7 +122,7 @@ public class AdminMenu {
                 case 5:
                     // Đăng xuất
                     System.out.println("Đăng xuất thành công.");
-                    login.main(null);
+                    Login.loginScreen(null);;
                     break;
 
                 default:

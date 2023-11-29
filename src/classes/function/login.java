@@ -3,12 +3,15 @@ package classes.function;
 import classes.repository.*;
 import classes.user.*;
 
+import classes.util.Constant;
+
+
 import java.util.Scanner;
 
-public class login {
-	public static void main(String[] args) {
+public class Login {
+	public static void loginScreen(String filename) {
 		Scanner sc = new Scanner(System.in);
-		AccountRepository accountRepository = new AccountRepository("acclist.txt");
+		AccountRepository accountRepository = new AccountRepository(filename);
 
 		while (true) {
 			System.out.println("[1].DANG NHAP");
@@ -32,12 +35,12 @@ public class login {
 					if (loggedInAccount.getRole().equalsIgnoreCase("admin")) { 
 						System.out.println("Đăng nhập thành công với tài khoản admin!");
                         AdminMenu ad = new AdminMenu();
-                        ad.admin();
+                        ad.admin(filename);
 					}
                     else if(loggedInAccount.getRole().equalsIgnoreCase("professor")){
 						System.out.println("Đăng nhập thành công với tài khoản professor!");
                         ProfessorMenu pro = new ProfessorMenu();
-                        pro.professor();
+                        pro.professor(Constant.dataPath.QuestionBanks_Dir);
 				    }
 				}
 

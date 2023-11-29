@@ -2,16 +2,15 @@ package classes.function;
 
 import classes.question.Question;
 import classes.repository.*;
-// import classes.user.*;
+import classes.util.Constant;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProfessorMenu {
-    public void professor(){
+    public void professor(String quesfile){
         Scanner sc = new Scanner(System.in);
-        AccountRepository accountRepository = new AccountRepository("acclist.txt");
-        QuestionRepository questionRepository = new QuestionRepository("questionlist.txt");
+        QuestionRepository questionRepository = new QuestionRepository(quesfile);
         while (true) {
             // them sua xoa cau hoi
             // tao de thi
@@ -20,9 +19,8 @@ public class ProfessorMenu {
             System.out.println("[1]. Hien thi danh sach cau hoi");
             System.out.println("[2]. Them cau hoi");
             System.out.println("[3]. Tim kiem cau hoi");
-            // System.out.println("[3]. Sửa thông tin câu hỏi"); !!! tao question bank
-            // System.out.println("[4]. Xóa câu hỏi");
-            System.out.println("[5]. Tạo đề thi");
+            System.out.println("[4]. Hien thi danh sach de thi");
+            System.out.println("[5]. Tao de thi");
             System.out.println("[6]. Xem kết quả bài kiểm tra");
             System.out.println("[7]. Đăng xuất");
 
@@ -101,24 +99,24 @@ public class ProfessorMenu {
                                             int choice = sc.nextInt();
                                             sc.nextLine();
 
-                                            switch (choice) {
-                                                case 1:
-                                                    // new content, new diff, new answer, new corr ans
-                                                    questionRepository.modifyQuestion(i, question);
-                                                    break;
-                                                case 2:
-                                                    questionRepository.removeQuestion(i);
-                                                    System.out.println("cau hoi da duoc xoa!");
-                                                    quesArr.remove(i);
-                                                    i--; // Đảm bảo vòng lặp không bị lỗi do việc xóa phần tử
-                                                    break;
-                                                case 3:
-                                                    // Tiếp tục tìm kiếm
-                                                    break;
-                                                default:
-                                                    System.out.println("Lua chon khong hop le.");
-                                                    break;
-                                            }
+                                            // switch (choice) {
+                                            //     case 1:
+                                            //         // new content, new diff, new answer, new corr ans
+                                            //         questionRepository.modifyQuestion(i, question);
+                                            //         break;
+                                            //     case 2:
+                                            //         questionRepository.removeQuestion(i);
+                                            //         System.out.println("cau hoi da duoc xoa!");
+                                            //         quesArr.remove(i);
+                                            //         i--; // Đảm bảo vòng lặp không bị lỗi do việc xóa phần tử
+                                            //         break;
+                                            //     case 3:
+                                            //         // Tiếp tục tìm kiếm
+                                            //         break;
+                                            //     default:
+                                            //         System.out.println("Lua chon khong hop le.");
+                                            //         break;
+                                            // }
                                 }
 
                                 break;
@@ -160,20 +158,12 @@ public class ProfessorMenu {
 
                 case 4:
                     // Xóa người dùng
-                    System.out.println("Nhập user name của người dùng cần xóa: ");
-                    String deleteUsername = sc.nextLine();
-
-                    if (accountRepository.removeUser(deleteUsername)) {
-                        System.out.println("Người dùng đã được xóa.");
-                    } else {
-                        System.out.println("Không tìm thấy người dùng.");
-                    }
+                    
                     break;
 
                 case 5:
                     // Đăng xuất
-                    System.out.println("Đăng xuất thành công.");
-                    System.exit(0);
+
                     break;
 
                 default:
