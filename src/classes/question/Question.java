@@ -65,13 +65,14 @@ public class Question {
 		this.correctAnswer = correctAnswer;
 	}
 	
-	public String questionDisplay() {
+	public String questionDetail() {
 		return
-				this.content  +"\n"+
-				this.answer[0]+"\n"+
-				this.answer[1]+"\n"+
-				this.answer[2]+"\n"+
-				this.answer[3]+"\n"
+				this.correctAnswer+"\n"+
+				this.content      +"\n"+
+				this.answer[0]    +"\n"+
+				this.answer[1]    +"\n"+
+				this.answer[2]    +"\n"+
+				this.answer[3]    +"\n"
 		;
 	}
 

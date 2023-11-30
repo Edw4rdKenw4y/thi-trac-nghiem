@@ -1,77 +1,21 @@
 package classes.subject;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class SubjectList {
+	/*
+	 * tao mang nhu sau:
+	 * ID		Ten
+	 * IT001	Co so lap trinh
+	 * IT002	Ky thuat lap trinh
+	 * IT00x	xxx
+	 * 
+	 * ham khoi tao:
+	 * - mo va doc file Constant.dataPath.SubjectList_File
+	 * - doc bang cach:
+	 * 	loop(scanner.hasNextLine()) {
+	 * 		mang->ID = scanner.Next();
+	 * 		mang->Ten = scanner.Next();
+	 * 	}
+	 * => da co mang du lieu
+	 * */
 
-    private ArrayList<Subject> subjects;
-
-    public SubjectList() {
-        subjects = new ArrayList<>();
-        loadDataFromFile(Constant.dataPath.SubjectList_File);
-    }
-
-    private void loadDataFromFile(String filePath) {
-        try {
-            File file = new File(filePath);
-            Scanner scanner = new Scanner(file);
-
-            // Skip the header line
-            if (scanner.hasNextLine()) {
-                scanner.nextLine();
-            }
-
-            while (scanner.hasNextLine()) {
-            	String id = scanner.next();
-    			String name = scanner.nextLine();
-    			Subject sub = new Subject(id);
-    			subjects.add(sub);
-            }
-
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addSubject(String id, String name) {
-       
-        subjects.add(new Subject(id));
-
-        writeToFile(Constant.dataPath.SubjectList_File);
-    }
-
-    private void writeToFile(String filePath) {
-        try {
-            FileWriter writer = new FileWriter(filePath);
-
-            for (Subject subject : subjects) {
-                writer.write(subject.getId() + "\t" + subject.getName() + "\n");
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getSubjectNameById(String id) {
-        for (Subject subject : subjects) {
-            if (subject.getId().equals(id)) {
-                return subject.getName();
-            }
-        }
-        return null; 
-    }
-
-    public ArrayList<String[]> getIdAndNames() {
-        ArrayList<String[]> idAndNames = new ArrayList<>();
-        for (Subject subject : subjects) {
-            String[] idAndName = {subject.getId(), subject.getName()};
-            idAndNames.add(idAndName);
-        }
-        return idAndNames;
-    }
 }

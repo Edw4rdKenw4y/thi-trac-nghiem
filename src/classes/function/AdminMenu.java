@@ -122,7 +122,7 @@ public class AdminMenu {
                 case 5:
                     // Đăng xuất
                     System.out.println("Đăng xuất thành công.");
-                    Login.loginScreen(null);;
+                    // Login.loginScreen(Constant.dataPath.accounts_File);;
                     break;
 
                 default:

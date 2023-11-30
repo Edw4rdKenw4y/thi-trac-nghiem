@@ -6,11 +6,11 @@ public class ExamRecord {
 
 	private String examId;
 	private String studentId;
-	private int score;
+	private double score;
 	private int timeTaken;
-	private ArrayList<Integer> marks;
+	private ArrayList<Double> marks;
 
-	public ExamRecord(String examId, String studentId, int score, int timeTaken, ArrayList<Integer> marks) {
+	public ExamRecord(String examId, String studentId, double score, int timeTaken, ArrayList<Double> marks) {
 		this.examId = examId;
 		this.studentId = studentId;
 		this.score = score;
@@ -34,11 +34,11 @@ public class ExamRecord {
 		this.studentId = studentId;
 	}
 
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 
@@ -50,20 +50,16 @@ public class ExamRecord {
 		this.timeTaken = timeTaken;
 	}
 
-	public ArrayList<Integer> getMarks() {
+	public ArrayList<Double> getMarks() {
 		return marks;
 	}
 
-	public void setMarks(ArrayList<Integer> marks) {
+	public void setMarks(ArrayList<Double> marks) {
 		this.marks = marks;
 	}
 
 	public String examRecordHeader() {
-		return
-				examId    + "\n" +
-				studentId + "\n" +
-				score     + "\n" +
-				timeTaken + "\n";
+		return examId + "\n" + studentId + "\n" + score + "\n" + timeTaken + "\n";
 	}
 
 	@Override

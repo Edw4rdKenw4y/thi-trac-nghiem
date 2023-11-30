@@ -24,10 +24,16 @@ public class ExamRecordRepository {
 		this.clazz = clazz;
 		this.date = date;
 		this.path = baseDir + "/" + subject.getId() + "/" + clazz + "/" + date;
-		createDir();
+		if (createDir()) {
+			this.baseDir = null;
+			this.subject = null;
+			this.clazz = null;
+			this.date = null;
+			this.path = null;
+		}
 	}
 
-	public void addExamRecord(ExamRecord examRecord, String examRecordFileName) {
+	public boolean addExamRecord(ExamRecord examRecord, String examRecordFileName) {
 		createFile(this.path + examRecordFileName);
 		try {
 			FileWriter writer = new FileWriter(this.path + examRecordFileName);
@@ -37,9 +43,9 @@ public class ExamRecordRepository {
 			}
 			writer.close();
 		} catch (IOException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 
 	public boolean removeExamRecord(String examRecordFileName) {
@@ -53,9 +59,11 @@ public class ExamRecordRepository {
 		}
 	}
 
-	public void displayExamRecord(String examRecordFileName) {
+	public boolean displayExamRecord(String examRecordFileName) {
 		try {
 			final File file = new File(this.path + examRecordFileName);
+			if (!file.exists())
+				return false;
 			Scanner scanner = new Scanner(file);
 			System.out.println("Exam ID: " + scanner.nextLine());
 			System.out.println("Student ID: " + scanner.nextLine());
@@ -68,30 +76,43 @@ public class ExamRecordRepository {
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
+			return false;
 		}
+		return true;
+	}
+
+	public boolean displaySummaryResults() {
+		final File folder = new File(this.path);
+		for (final File fileEntry : folder.listFiles()) {
+			try {
+				Scanner scanner = new Scanner(fileEntry);
+				int count = 0;
+				String data;
+				while ((data = scanner.nextLine()) != null && count++ != 2)
+					System.out.print(data + " ");
+				System.out.println();
+				scanner.close();
+			} catch (FileNotFoundException e) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean createDir() {
 		File dir = new File(this.path);
-		if (!dir.exists()) {
-			dir.mkdirs();
-			return true;
-		}
+		if (!dir.exists())
+			return dir.mkdirs();
 		return false;
 	}
 
 	private boolean createFile(String fileName) {
 		try {
 			File file = new File(fileName);
-			if (!file.exists()) {
-				file.createNewFile();
-				return true;
-			}
+			if (!file.exists())
+				return file.createNewFile();
 		} catch (IOException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
+			return false;
 		}
 		return false;
 	}

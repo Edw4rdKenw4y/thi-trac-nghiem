@@ -3,112 +3,94 @@ package classes.function;
 import classes.repository.*;
 import classes.user.*;
 
-import classes.util.Constant;
-
-
 import java.util.Scanner;
 
 public class Login {
-	public static void loginScreen(String filename) {
-		Scanner sc = new Scanner(System.in);
-		AccountRepository accountRepository = new AccountRepository(filename);
+    private static Scanner sc = new Scanner(System.in);
 
-		while (true) {
-			System.out.println("[1].DANG NHAP");
-			System.out.println("[2].DANG KY");
-			System.out.println("[3].EXIT");
-			System.out.println("NHAP LUA CHON: ");
-			int choice = sc.nextInt();
-			sc.nextLine(); 
 
-			switch (choice) {
-			case 1:
-				System.out.println("Nhap user name: ");
-				String loginUsername = sc.nextLine();
-				System.out.println("Nhap password: ");
-				String loginPassword = sc.nextLine();
+    public static void login( AccountRepository accountRepository) {
+        System.out.println("Enter username: ");
+        String loginUsername = sc.nextLine();
+        System.out.println("Enter password: ");
+        String loginPassword = sc.nextLine();
 
-				Account loggedInAccount = accountRepository.findUserByUserName(loginUsername);
+        Account loggedInAccount = accountRepository.findUserByUserName(loginUsername);
 
-				if (loggedInAccount != null && loggedInAccount.getPassword().equals(loginPassword)) {
-					System.out.println("Login successful!");
-					if (loggedInAccount.getRole().equalsIgnoreCase("admin")) { 
-						System.out.println("Đăng nhập thành công với tài khoản admin!");
-                        AdminMenu ad = new AdminMenu();
-                        ad.admin(filename);
-					}
-                    else if(loggedInAccount.getRole().equalsIgnoreCase("professor")){
-						System.out.println("Đăng nhập thành công với tài khoản professor!");
-                        ProfessorMenu pro = new ProfessorMenu();
-                        pro.professor(Constant.dataPath.QuestionBanks_Dir);
-				    }
-				}
+        if (loggedInAccount != null && loggedInAccount.getPassword().equals(loginPassword)) {
+            System.out.println("Login successful!");
+            handleRole(loggedInAccount.getRole());
+        } else {
+            System.out.println("Login failed. Invalid username or password.");
+        }
+    }
 
-				else {
-					System.out.println("Login failed. Invalid username or password.");
-				}
-				break;
+    public static void register(AccountRepository accountRepository) {
+        System.out.println("Enter username: ");
+        String username = sc.nextLine();
 
-			case 2:
-				System.out.println("Nhap user name: ");
-				System.out.println("Professor: <faculty><subjectId><count> Example: IT001001");
-				System.out.println("Student: <faculty><year><class><count> Example: IT202240001");
-				String username = sc.nextLine();
+        System.out.println("Enter password: ");
+        String password = sc.nextLine();
 
-				System.out.println("Nhap password: ");
-				String password = sc.nextLine();
+        System.out.println("Enter role: ");
+        String role = sc.nextLine();
 
-				System.out.println("Nhap role: ");
-				String role = sc.nextLine();
+        System.out.println("Enter full name: ");
+        String fullName = sc.nextLine();
 
-				System.out.println("Nhap full name: (vd:Nguyen_Van_A)");
-				String fullName = sc.nextLine();
+        System.out.println("Enter year of birth: ");
+        int yearOfBirth = sc.nextInt();
+        sc.nextLine();
 
-				System.out.println("Nhap nam sinh: ");
-				int yearOfBirth = sc.nextInt();
+        System.out.println("Enter gender: ");
+        String gender = sc.nextLine();
 
-				sc.nextLine(); 
+        System.out.println("Enter phone number: ");
+        String phoneNumber = sc.nextLine();
 
-				System.out.println("Nhap gioi tinh: ");
-				String gender = sc.nextLine();
+        Account acc = createAccount(username, password, role, fullName, yearOfBirth, gender, phoneNumber);
 
-				System.out.println("Nhap sdt: ");
-				String phoneNumber = sc.nextLine();
+        accountRepository.saveList();
 
-				Account acc = null;
-				UserInfo info = new UserInfo(fullName, yearOfBirth, gender, phoneNumber);
-				if (role.equalsIgnoreCase("professor")) {
-					acc = new Professor() {}; 
-				} else if (role.equalsIgnoreCase("student")) {
-					acc = new Student() {}; 
-				} if (role.equalsIgnoreCase("admin")) {
-					acc = new Admin() {}; 
-				}
+        System.out.println(acc);
 
-				acc.setUsername(username); 
-				acc.setPassword(password); 
-				acc.setRole(role); 
-				acc.setInfo(info);
+        if (accountRepository.addUser(acc)) {
+            System.out.println("Registration successful!");
+        } else {
+            System.out.println("Registration failed. Username already exists.");
+        }
+    }
 
-				System.out.println(acc);
+    public static Account createAccount(String username, String password, String role, String fullName, int yearOfBirth, String gender, String phoneNumber) {
+        UserInfo info = new UserInfo(fullName, yearOfBirth, gender, phoneNumber);
+        if (role.equalsIgnoreCase("professor")) {
+            return new Professor(username, password, role, info);
+        } else if (role.equalsIgnoreCase("student")) {
+            return new Student(username, password, role, info);
+        } else if (role.equalsIgnoreCase("admin")) {
+            return new Admin(username, password, role, info);
+        } else {
+            return null;
+        }
+    }
 
-				if (accountRepository.addUser(acc)) {
-					System.out.println("Registration successful!");
-				} else {
-					System.out.println("Registration failed. Username already exists.");
-				}
-				break;
+    public static void handleRole(String role) {
+        if (role.equalsIgnoreCase("admin")) {
+            System.out.println("Login successful with admin account!");
+            // Add admin menu handling here
+        } else if (role.equalsIgnoreCase("professor")) {
+            System.out.println("Login successful with professor account!");
+            // Add professor menu handling here
+        } else if (role.equalsIgnoreCase("student")) {
+            System.out.println("Login successful with student account!");
+            // Add student menu handling here
+        }
+    }
 
-			case 3:
-				accountRepository.saveList();
-				System.out.println("Exiting program.");
-				System.exit(0);
-				break;
-
-			default:
-				System.out.println("Invalid choice. Please choose a valid option.");
-				break;
-			}
-		}
+	public static void exit(AccountRepository accountRepository)
+	{
+		accountRepository.saveList();
+		System.out.println("Exiting program.");
+		System.exit(0);
 	}
 }
